@@ -1,0 +1,56 @@
+<configuration>
+    <springProfile name="default">
+        <property name="CONSOLE_LOG_PATTERN"
+                  value="%d{HH:mm:ss.SSS} %green([%X{user:-no user}]) %highlight(%-5level) %highlight(%48.48logger) - %msg%n"/>
+    </springProfile>
+    <springProfile name="prod">
+        <property name="FILE_LOG_PATTERN"
+                  value="%d{dd.MM.yyyy HH:mm:ss.SSS} [%X{user}] [%thread] %-5level %logger{36} - %msg%n"/>
+        <property name="LOG_FILE" value="workshop.log"/>
+        <include resource="org/springframework/boot/logging/logback/file-appender.xml"/>
+    </springProfile>
+
+    <appender name="json" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+            <includeThreadName>false</includeThreadName>
+            <includeContextName>false</includeContextName>
+            <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"/>
+            <timestampFormat>yyyy-MM-dd' 'HH:mm:ss.SSS</timestampFormat>
+            <appendLineSeparator>true</appendLineSeparator>
+        </layout>
+    </appender>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <springProfile name="!prod">
+        <root level="info">
+            <appender-ref ref="CONSOLE"/>
+<!--            <appender-ref ref="json"/>-->
+        </root>
+    </springProfile>
+    <springProfile name="prod">
+        <root level="info">
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
+    <!-- Log levels: trace, debug, info, warn, error, off -->
+    <logger name="de.workshops" level="debug"/>
+
+    <logger name="liquibase" level="warn"/>
+    <logger name="org.springframework" level="warn"/>
+    <logger name="com.zaxxer.hikari" level="info"/>
+    <logger name="org.apache" level="warn"/>
+
+    <logger name="org.hibernate" level="warn"/>
+    <logger name="org.hibernate.SQL" level="warn"/>
+    <logger name="org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator" level="debug"/> <!-- database connections -->
+
+    <logger name="org.springframework.boot" level="info"/>
+    <logger name="org.springframework.boot.devtools" level="warn"/>
+    <logger name="org.springframework.security" level="info"/>
+    <logger name="org.springframework.boot.autoconfigure.security.servlet" level="info"/>
+    <!-- <logger name="org.springframework.test" level="debug" /> -->
+    <logger name="org.springframework.web" level="debug"/>
+</configuration>
