@@ -1,0 +1,21 @@
+### GET all books
+GET http://localhost:8080/book
+Accept: application/json
+
+### GET book by isbn
+GET http://localhost:8080/book/978-3826655487
+Accept: application/json
+
+### GET all books
+GET http://localhost:8080/book?author=Wol
+Accept: application/json
+
+### POST search books
+POST http://localhost:8080/book/search
+Content-Type: application/json
+
+{
+  "isbn": "978-3826655487",
+  "title": "BlaBla",
+  "author": "Wol"
+}
