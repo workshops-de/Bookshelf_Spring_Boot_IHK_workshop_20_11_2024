@@ -51,8 +51,15 @@ public class BookRestController {
         return ResponseEntity.ok(foundBooks);
     }
 
+    @PostMapping
+    Book createBook(@RequestBody @Valid Book book) {
+        return book;
+    }
+
+
     @ExceptionHandler(BookException.class)
     ResponseEntity<String> handleBookException(BookException bookException) {
         return new ResponseEntity<>(bookException.getMessage(), HttpStatus.I_AM_A_TEAPOT);
     }
+
 }
