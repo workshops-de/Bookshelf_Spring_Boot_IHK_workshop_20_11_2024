@@ -1,9 +1,11 @@
+version: "3.8"
+
 services:
   postgres:
-    image: 'postgres:latest'
+    image: 'postgres:16-alpine'
     environment:
       - POSTGRES_DB=bookshelf
       - POSTGRES_USER=birgit
       - POSTGRES_PASSWORD=geheim
     ports:
-      - '5432:5432'
+      - "5432:5432"

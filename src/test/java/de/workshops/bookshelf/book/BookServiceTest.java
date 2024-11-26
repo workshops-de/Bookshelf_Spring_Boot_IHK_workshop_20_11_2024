@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 class BookServiceTest {
 
     @Mock
-    private BookRepository bookRepository;
+    private BookJdbcTemplateRepository bookRepository;
 
     @InjectMocks
     private BookService bookService;

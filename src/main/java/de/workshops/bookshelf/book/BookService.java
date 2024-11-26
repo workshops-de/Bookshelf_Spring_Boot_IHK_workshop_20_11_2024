@@ -6,9 +6,9 @@ import java.util.List;
 
 @Service
 public class BookService {
-    private final BookRepository bookRepository;
+    private final BookJdbcTemplateRepository bookRepository;
 
-    public BookService(final BookRepository bookRepository) {
+    public BookService(final BookJdbcTemplateRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
@@ -36,6 +36,9 @@ public class BookService {
                 .toList();
     }
 
+    Book createBook(Book book) {
+        return this.bookRepository.save(book);
+    }
     private boolean hasIsbn(Book book, String isbn) {
         return book.getIsbn().equals(isbn);
     }
