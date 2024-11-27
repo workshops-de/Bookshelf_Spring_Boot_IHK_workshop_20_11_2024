@@ -27,3 +27,72 @@ databaseChangeLog:
       rollback:
         - dropTable:
             tableName: book
+
+  - changeSet:
+      id: createTableUsers
+      author: workshops
+      changes:
+        - createTable:
+            tableName: bookshelf_user
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: username
+                  type: varchar
+                  constraints:
+                    unique: true
+              - column:
+                  name: password
+                  type: varchar
+              - column:
+                  name: firstname
+                  type: varchar
+              - column:
+                  name: lastname
+                  type: varchar
+              - column:
+                  name: role
+                  type: varchar
+              - column:
+                  name: lastlogin
+                  type: datetime
+      rollback:
+        - dropTable:
+            tableName: bookshelf_user
+
+  - changeSet:
+      id: createDefaultAdmin
+      author: workshops
+      changes:
+        - sql:
+            sql: >
+              INSERT INTO bookshelf_user (username, password, firstname, lastname, role)
+              VALUES ('birgit', 'geheim', 'Default', 'Default', 'ROLE_USER');
+              INSERT INTO bookshelf_user (username, password, firstname, lastname, role)
+              VALUES ('admin', 'admin', 'Default', 'Default', 'ROLE_ADMIN');
+      rollback:
+        - sql:
+            sql: DELETE FROM bookshelf_user;
+
+  - changeSet:
+      id: updateDefaultAdmin
+      author: workshops
+      changes:
+        - sql:
+            sql: >
+              UPDATE bookshelf_user SET password = '$2a$10$LwvfRdnsKkR2dsyL3jVLzuICDp3tmpgmGQSU9ANX0gYvRufyStAO2'
+              WHERE username = 'birgit';
+              UPDATE bookshelf_user SET password = '$2a$10$k4mkM941AMTHizR8CkgyTOQ3ZpWSyUWmKTeIxR2FauH7bpDTEi9RO'
+              WHERE username = 'admin';
+      rollback:
+        - sql:
+            sql: >
+              UPDATE bookshelf_user SET password = 'geheim'
+              WHERE username = 'birgit';
+              UPDATE bookshelf_user SET password = 'admin'
+              WHERE username = 'admin';

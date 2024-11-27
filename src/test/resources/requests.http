@@ -1,6 +1,7 @@
 ### GET all books
 GET http://localhost:8080/book
 Accept: application/json
+Authorization: Basic birgit geheim
 
 ### GET book by isbn
 GET http://localhost:8080/book/978-3826655487
@@ -19,3 +20,8 @@ Content-Type: application/json
   "title": "BlaBla",
   "author": "Wol"
 }
+
+### GET all books
+GET http://localhost:8080/actuator/beans
+Accept: application/json
+Authorization: Basic birgit geheim
